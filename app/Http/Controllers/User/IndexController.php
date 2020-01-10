@@ -5,6 +5,8 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Moder\UserModel;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Redis;
 
 class IndexController extends Controller
 {
@@ -101,8 +103,72 @@ class IndexController extends Controller
                 }
             }
         }
+        if($post['error']=='ok')
+        {
+            $token = Str::random(12);
+            // echo $token;die;
+            $pri = 'werty';
+            $key = 'str:u:' . md5($name.$pri);
+            // dd($key);
+            Redis::set($key,$token);
+            Redis::expire($key,3600);
+        }
+
+        echo Redis::get($key);
 
         return $post;
+
+    }
+
+    public function add()
+    {
+        
+        // echo '<pre>';print_r($_GET);echo '</pre>';
+        $name = $_GET['name'];
+        $token = $_SERVER['HTTP_TOKEN'];
+        $pri = 'werty';
+        $key = 'str:u:' . md5($name.$pri);
+
+        $post = Redis::get($key);
+        // echo $pri;
+        // echo '<hr>';
+        // echo $key;
+        // echo '<hr>';
+        // echo $token;
+        // echo '<hr>';
+        // echo $name;
+        // dd($post);
+
+        if($post != $token)
+        {
+            return $post = [
+                'error'=>'303',
+                'msg'=>'token不正确',
+            ];
+        }
+
+        $poss = UserModel::where('name','=',$name)->first();
+        
+        if($poss)
+        {
+            return $poss;
+        }else{
+            $poss = UserModel::where('tel','=',$name)->first();
+            if($poss)
+            {
+                return $poss;
+            }else{
+                $poss = UserModel::where('tel','=',$name)->first();
+                if($poss)
+                {
+                    return $poss;
+                }
+            }
+        }
+
+
+        
+
 
     }
 }

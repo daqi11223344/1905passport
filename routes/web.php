@@ -21,4 +21,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/index','User\IndexController@index');
 Route::post('/login','User\IndexController@login');
+Route::get('/add','User\IndexController@add');
 
