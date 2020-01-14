@@ -19,7 +19,14 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('/index','User\IndexController@index');
-Route::post('/login','User\IndexController@login');
-Route::get('/add','User\IndexController@add');
+Route::post('/user','User\IndexController@index');  //用户注册
+Route::post('/passport','User\IndexController@pass');   //用户登录
+Route::post('/passports','User\IndexController@passd'); 
+Route::post('/passportd','User\IndexController@passt');
+Route::get('/showData','User\IndexController@showData');    //获取数据接口
+Route::post('/auth','User\IndexController@auth');    //获取数据接口
+Route::post('/gitpull','User\IndexController@gitpull');
+Route::get('/token','User\IndexController@token');
+
+
 

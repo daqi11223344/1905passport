@@ -21,5 +21,13 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         '/index',
         '/login',
+        '/passport',
+        '/passports',
+        '/passportd',
+        '/token',
+        '/user',
+        '/reg',
+        '/showData',
+        '/auth',
     ];
 }
