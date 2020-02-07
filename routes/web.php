@@ -29,6 +29,10 @@ Route::post('/gitpull','User\IndexController@gitpull');
 Route::get('/token','User\IndexController@token');
 
 Route::get('/check','Test\TestController@md5post');
+Route::post('/checks','Test\TestController@checks');
+
+Route::post('/priv','Test\TestController@priv');
+Route::post('/pub','Test\TestController@pub');
 
 
 

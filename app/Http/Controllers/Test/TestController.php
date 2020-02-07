@@ -12,7 +12,7 @@ class TestController extends Controller
         echo "<h1 style='color:red'>接收端>>>>>> </h1>"; echo '</br>';
         echo '<pre>';print_r($_GET);echo '</pre>';
 
-        $key = "哒哒哒哒哒哒";          // 计算签名的KEY 与发送端保持一致
+        $key = "111";          // 计算签名的KEY 与发送端保持一致
 
         //验签
         $data = $_GET['data'];  //接收到的数据
@@ -21,7 +21,7 @@ class TestController extends Controller
         // 计算签名
         echo "<h3 style='color:blue'>接收到的签名：</h3>". $signature;echo '</br>';
         $reg = md5($data.$key);
-        echo "<h3 style='color:blue'>接收端计算的签名：</h3>". $s;echo '</br>';
+        echo "<h3 style='color:blue'>接收端计算的签名：</h3>". $reg;echo '</br>';
 
         //与接收到的签名 比对
         if($reg == $signature)
@@ -30,5 +30,56 @@ class TestController extends Controller
         }else{
             echo "<b style='color:red'>验签失败</b>";
         }
+    }
+
+    public function checks()
+    {
+        $key = "111";
+        echo '<pre>';print_r($_POST);
+
+        // 接受
+        $json_data = $_POST['json'];
+        $sign = $_POST['sign'];
+
+        $signs = md5($json_data.$key);
+        echo "<h1 style='color:red'>接受端计算的签名：</h1>" . $signs;
+        echo '<br>';
+
+        if($signs==$sign){
+            echo "<b style='color:green'>验签通过</b>";
+        }else{
+            echo "<b style='color:red'>验签失败</b>"; 
+        }
+    }
+
+    public function priv(){
+        $data = $_POST;
+        print_r($data);
+        $priv_key = file_get_contents(storage_path('keys/priv'));
+        echo '<hr>';
+        $data = $_POST['data'];
+        $s = $_POST['sign'];
+        $ss = md5($priv_key . $data);
+        if($s == $ss){
+             echo '<b style="color:red">验签成功</b>';
+ 
+        }else{
+            echo '验签失败';
+        }
+    }
+    public function pub(){
+     $data = $_POST;
+     print_r($data);
+     $pub_key = file_get_contents(storage_path('keys/pub'));
+     echo '<hr>';
+     $data = $_POST['data'];
+     $s = $_POST['sign'];
+     $ss = md5($pub_key . $data);
+     if($s == $ss){
+          echo '<b style="color:red">验签成功</b>';
+ 
+     }else{
+         echo '验签失败';
+     }
     }
 }

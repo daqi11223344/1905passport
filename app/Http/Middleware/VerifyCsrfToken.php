@@ -29,5 +29,6 @@ class VerifyCsrfToken extends Middleware
         '/reg',
         '/showData',
         '/auth',
+        'checks',
     ];
 }
