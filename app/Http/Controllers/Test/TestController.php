@@ -38,14 +38,15 @@ class TestController extends Controller
         echo '<pre>';print_r($_POST);
 
         // 接受
-        $json_data = $_POST['json'];
-        $sign = $_POST['sign'];
+        $json = $_POST['order'];
+        // dd($json);
+        $reg = $_POST['reg'];
 
-        $signs = md5($json_data.$key);
+        $signs = md5($json.$key);
         echo "<h1 style='color:red'>接受端计算的签名：</h1>" . $signs;
         echo '<br>';
 
-        if($signs==$sign){
+        if($signs==$reg){
             echo "<b style='color:green'>验签通过</b>";
         }else{
             echo "<b style='color:red'>验签失败</b>"; 
