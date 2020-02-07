@@ -52,35 +52,37 @@ class TestController extends Controller
             echo "<b style='color:red'>验签失败</b>"; 
         }
     }
-
-    public function priv(){
+    // 公钥
+    public function pub(){
         $data = $_POST;
         print_r($data);
-        $priv_key = file_get_contents(storage_path('keys/priv'));
         echo '<hr>';
         $data = $_POST['data'];
-        $s = $_POST['sign'];
-        $ss = md5($priv_key . $data);
-        if($s == $ss){
+        $soso = $_POST['sign'];
+        echo $soso;
+        echo "<br>";
+        $priv_key = file_get_contents(storage_path('keys/pub'));
+        $sufo = openssl_verify($data,base64_decode($soso), $pubkey,OPENSSL_ALGO_SHA256);
+        if($sufo){
              echo '<b style="color:red">验签成功</b>';
  
         }else{
             echo '验签失败';
         }
     }
-    public function pub(){
-     $data = $_POST;
-     print_r($data);
-     $pub_key = file_get_contents(storage_path('keys/pub'));
-     echo '<hr>';
-     $data = $_POST['data'];
-     $s = $_POST['sign'];
-     $ss = md5($pub_key . $data);
-     if($s == $ss){
-          echo '<b style="color:red">验签成功</b>';
+    // public function pub(){
+    //  $data = $_POST;
+    //  print_r($data);
+    //  $pub_key = file_get_contents(storage_path('keys/pub'));
+    //  echo '<hr>';
+    //  $data = $_POST['data'];
+    //  $s = $_POST['sign'];
+    //  $ss = md5($pub_key . $data);
+    //  if($s == $ss){
+    //       echo '<b style="color:red">验签成功</b>';
  
-     }else{
-         echo '验签失败';
-     }
-    }
+    //  }else{
+    //      echo '验签失败';
+    //  }
+    // }
 }
