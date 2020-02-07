@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redis;
 
 class IndexController extends Controller
 {
+    
     /**
      * Undocumented function
      * 
@@ -114,8 +115,6 @@ class IndexController extends Controller
      */
     public function pass()
     {
-
-
         print_r($_POST);echo '</br>';echo '<hr>';
         $name = $_POST['name'];
         $pwd = $_POST['pwd'];
@@ -344,7 +343,22 @@ class IndexController extends Controller
         }
      }
 
-     
+
+     public function userList()
+    {
+        $user_token = $_SERVER['HTTP_TOKEN'];
+        $current_url = $_SERVER['REQUEST_URI'];
+        echo 'user_token:'.$user_token;echo '</br>';
+        echo "当前URL:".$current_url;echo'<hr>';
+
+        $redis_key = 'str:count:url:'.$user_token.'url:'.md5($current_url);
+        echo 'redis key: '.$redis_key;echo '</br>'; 
+
+        $count = Redis::incr($redis_key);
+        echo 'count: '.$count;
+    }
+
+    
 
     
 }

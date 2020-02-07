@@ -28,5 +28,8 @@ Route::post('/auth','User\IndexController@auth');    //获取数据接口
 Route::post('/gitpull','User\IndexController@gitpull');
 Route::get('/token','User\IndexController@token');
 
+Route::get('/check','Test\TestController@md5post');
+
+
 
 
