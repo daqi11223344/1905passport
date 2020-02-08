@@ -71,18 +71,32 @@ class TestController extends Controller
         }
     }
     // public function pub(){
-    //  $data = $_POST;
-    //  print_r($data);
-    //  $pub_key = file_get_contents(storage_path('keys/pub'));
-    //  echo '<hr>';
-    //  $data = $_POST['data'];
-    //  $s = $_POST['sign'];
-    //  $ss = md5($pub_key . $data);
-    //  if($s == $ss){
-    //       echo '<b style="color:red">验签成功</b>';
- 
-    //  }else{
-    //      echo '验签失败';
-    //  }
+        //  $data = $_POST;
+        //  print_r($data);
+        //  $pub_key = file_get_contents(storage_path('keys/pub'));
+        //  echo '<hr>';
+        //  $data = $_POST['data'];
+        //  $s = $_POST['sign'];
+        //  $ss = md5($pub_key . $data);
+        //  if($s == $ss){
+        //       echo '<b style="color:red">验签成功</b>';
+    
+        //  }else{
+        //      echo '验签失败';
+        //  }
     // }
+
+    // 解密
+    public function rsa1()
+    {
+        $data = base64_decode($_GET['data']);
+   
+       // echo '1:'.$data;echo '</br>';
+       $met = 'AES-256-CBC';
+       $key = '1905API';
+       $vi = 'WUSD8796IDjhkchd';
+       $data1 = openssl_decrypt($data,$met,$key,OPENSSL_RAW_DATA,$vi);
+       $arr = json_decode($data1,true);
+       echo '</pre>';print_r($arr);echo '</pre>';
+    }
 }
