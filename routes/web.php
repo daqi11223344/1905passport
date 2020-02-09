@@ -35,6 +35,7 @@ Route::post('/priv','Test\TestController@priv');
 Route::post('/pub','Test\TestController@pub');
 
 Route::get('/rsa1','Test\TestController@rsa1');
+Route::get('/rsa2','Test\TestController@rsa2');
 
 
 

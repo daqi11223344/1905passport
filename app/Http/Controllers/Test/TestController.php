@@ -99,4 +99,16 @@ class TestController extends Controller
        $arr = json_decode($data1,true);
        echo '</pre>';print_r($arr);echo '</pre>';
     }
+
+    // 非对称解密
+    public function rsa2()
+    {
+        $data2 = base64_decode($_GET['data']);
+        echo "$data2";echo '<hr>';
+   
+       $pub_key = file_get_contents(storage_path('keys/pub'));
+       echo 'pub_key:' . $pub_key;echo '<hr>';
+       $data1 = openssl_public_decrypt($data2,$base64_str,$pub_key);
+       echo '<h1 style="color:green">解密：</h1>' . $base64_str;
+    }
 }
